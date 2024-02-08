@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-yt6ensq2hi6zg*z9=(9293c*sarl=gh@7$!8094cc$2#l7si77
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [web-shop-qwag.onrender.com]
+ALLOWED_HOSTS = []
 
 
 # Application definition
