@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <title>Payment</title>
+</head>
+<body>
+
+<h1>Checkout</h1>
+    <div class="order-info">
+        <h3>Your order</h3>
+    <ul>
+    {% for item in cart %}
+        <li>
+          {{ item.quantity }}x {{ item.product.name }}
+          <span>${{ item.total_price }} {{email}}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <p>Total: ${{ cart.get_total_price }}</p>
+</div>
+
+     <form id="paymentForm">
+
+        <div class="form-submit">
+            <button type="submit" onclick="payWithPaystack()"> Pay </button>
+        </div>
+    </form>
+<script>
+    const paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener("submit", payWithPaystack, false);
+    function payWithPaystack(e) {
+      e.preventDefault();
+
+      let handler = PaystackPop.setup({
+        key: 'pk_test_3ed1dc1de2753442cb78fee76c59037253210451',
+        email: "{{email}}",
+        amount: {{ cart.get_total_price }} * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+        onClose: function(){
+          alert('Window closed.');
+        },
+        callback: function(response){
+             window.location = "{% url 'order:save_item' id %}";
+        }
+      });
+
+      handler.openIframe();
+    }
+</script>
+</body>
+</html>
+
+</html>
